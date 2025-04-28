@@ -5,15 +5,16 @@ on:
     branches:
       - main
     paths:
-      - backend/afro-vintage-backend/**
+      - afro-vintage-backend/**
+
   pull_request:
     branches:
       - main
     paths:
-      - backend/afro-vintage-backend/**
+      - afro-vintage-backend/**
 
 jobs:
-  build-and-test:
+  build-test-and-docker:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,8 +30,15 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
+        working-directory: afro-vintage-backend
         run: go mod tidy
 
       # Run tests
       - name: Run tests
+        working-directory: afro-vintage-backend
         run: go test ./... -v
+
+      # Build Docker Image
+      - name: Build Docker image
+        working-directory: afro-vintage-backend
+        run: docker build -t afro-vintage-backend:latest .
