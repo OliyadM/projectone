@@ -1,0 +1,23 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Test logs
+*.log
+
+# Dependency directories
+vendor/
+
+# IDE/editor folders
+.idea/
+.vscode/
+*.swp
+
+# Env files
+.env
+.env.*

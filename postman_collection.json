@@ -1,0 +1,876 @@
+{
+  "info": {
+    "name": "Afro Vintage Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "## Afro Vintage Backend API Documentation\n\n### Overview\nThis Postman collection contains all the endpoints for interacting with the Afro Vintage Backend API. The API supports functionalities for authentication, product management, bundles, cart operations, reviews, orders, and admin operations.\n\n### How to Use\n1. **Base URL**: Set the `{{base_url}}` variable in your Postman environment to the base URL of the API.\n2. **Authentication**: Use the `Auth` endpoints to register and log in users. Tokens returned from login requests should be stored in the Postman environment variables (e.g., `{{token}}`, `{{admin_token}}`, `{{supplier_token}}`, `{{reseller_token}}`, `{{consumer_token}}`, etc.).\n3. **Authorization**: Include the appropriate token in the `Authorization` header for endpoints that require authentication.\n4. **Request Body**: For endpoints requiring a request body, provide the necessary JSON payload as described in the endpoint documentation.\n\n### Sections\n- **Auth**: Endpoints for user registration and login.\n- **Products**: Endpoints for managing products.\n- **Bundles**: Endpoints for managing bundles.\n- **Cart**: Endpoints for cart operations.\n- **Reviews**: Endpoints for submitting product reviews.\n- **Orders**: Endpoints for managing orders.\n- **Admin**: Endpoints for admin-specific operations.\n- **Warehouse**: Endpoints for warehouse management.\n- **Supplier**: Endpoints for supplier-specific operations.\n- **Reseller**: Endpoints for reseller-specific operations.\n\n### Notes\n- Ensure you have the correct role and token for accessing specific endpoints.\n- Refer to the description of each endpoint for detailed usage instructions."
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "description": "This folder contains endpoints for user authentication and registration. It includes endpoints for registering users with different roles (admin, supplier, reseller, consumer) and logging in to obtain authentication tokens.",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"supplier\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "This endpoint allows a new user to register by providing their username, email, password, and role."
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "var jsonData = pm.response.json();",
+                    "pm.environment.set(\"token\", jsonData.token);"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ],
+            "description": "This endpoint allows a user to log in by providing their username and password. A token is returned upon successful authentication."
+          }
+        },
+        {
+          "name": "Register Admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"adminuser\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"admin\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "This endpoint allows an admin to register by providing their username, email, password, and role as 'admin'."
+          }
+        },
+        {
+          "name": "Register Supplier",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"supplieruser\",\n  \"email\": \"supplier@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"supplier\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "This endpoint allows a supplier to register by providing their username, email, password, and role as 'supplier'."
+          }
+        },
+        {
+          "name": "Register Reseller",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"reselleruser\",\n  \"email\": \"reseller@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"reseller\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "This endpoint allows a reseller to register by providing their username, email, password, and role as 'reseller'."
+          }
+        },
+        {
+          "name": "Register Consumer",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"consumeruser\",\n  \"email\": \"consumer@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"consumer\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "This endpoint allows a consumer to register by providing their username, email, password, and role as 'consumer'."
+          }
+        },
+        {
+          "name": "Login Admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"adminuser\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "var jsonData = pm.response.json();",
+                    "if (jsonData.token) {",
+                    "  pm.environment.set(\"admin_token\", jsonData.token);",
+                    "} else {",
+                    "  console.error('Admin token not found in response');",
+                    "}"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ],
+            "description": "This endpoint allows an admin to log in by providing their username and password. A token is returned upon successful authentication."
+          }
+        },
+        {
+          "name": "Login Supplier",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"supplieruser\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "var jsonData = pm.response.json();",
+                    "if (jsonData.token) {",
+                    "  pm.environment.set(\"supplier_token\", jsonData.token);",
+                    "} else {",
+                    "  console.error('Supplier token not found in response');",
+                    "}"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ],
+            "description": "This endpoint allows a supplier to log in by providing their username and password. A token is returned upon successful authentication."
+          }
+        },
+        {
+          "name": "Login Reseller",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"reselleruser\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "var jsonData = pm.response.json();",
+                    "if (jsonData.token) {",
+                    "  pm.environment.set(\"reseller_token\", jsonData.token);",
+                    "} else {",
+                    "  console.error('Reseller token not found in response');",
+                    "}"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ],
+            "description": "This endpoint allows a reseller to log in by providing their username and password. A token is returned upon successful authentication."
+          }
+        },
+        {
+          "name": "Login Consumer",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"consumeruser\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "var jsonData = pm.response.json();",
+                    "if (jsonData.token) {",
+                    "  pm.environment.set(\"consumer_token\", jsonData.token);",
+                    "} else {",
+                    "  console.error('Consumer token not found in response');",
+                    "}"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ],
+            "description": "This endpoint allows a consumer to log in by providing their username and password. A token is returned upon successful authentication."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "description": "This folder contains endpoints for managing products. It includes creating, updating, retrieving, and deleting products, as well as submitting reviews for products.",
+      "item": [
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reseller_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Product Title\",\n  \"description\": \"Product Description\",\n  \"price\": 100.0,\n  \"size\": \"M\",\n  \"grade\": \"A\",\n  \"photo\": \"image_url\",\n  \"bundle_id\": \"bundle123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": ["{{base_url}}"],
+              "path": ["products"]
+            },
+            "description": "This endpoint allows a reseller to create a new product by providing details such as title, description, price, size, grade, photo, and bundle ID."
+          }
+        },
+        {
+          "name": "List Available Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": ["{{base_url}}"],
+              "path": ["products"]
+            },
+            "description": "This endpoint retrieves a list of all available products in the system."
+          }
+        },
+        {
+          "name": "Get Product By Title",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products/title/:title",
+              "host": ["{{base_url}}"],
+              "path": ["products", "title", ":title"]
+            },
+            "description": "This endpoint retrieves a product's details by its title."
+          }
+        },
+        {
+          "name": "Get Product By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products/:id",
+              "host": ["{{base_url}}"],
+              "path": ["products", ":id"]
+            },
+            "description": "This endpoint retrieves a product's details by its unique ID."
+          }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reseller_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Title\",\n  \"description\": \"Updated Description\",\n  \"price\": 120.0\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products/:id",
+              "host": ["{{base_url}}"],
+              "path": ["products", ":id"]
+            },
+            "description": "This endpoint allows a reseller to update an existing product's details."
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reseller_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products/:id",
+              "host": ["{{base_url}}"],
+              "path": ["products", ":id"]
+            },
+            "description": "This endpoint allows a reseller to delete a product by its unique ID."
+          }
+        },
+        {
+          "name": "Submit Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{consumer_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 5,\n  \"comment\": \"Great product!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products/:id/reviews",
+              "host": ["{{base_url}}"],
+              "path": ["products", ":id", "reviews"]
+            },
+            "description": "This endpoint allows a consumer to submit a review for a product."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bundles",
+      "description": "This folder contains endpoints for managing bundles. It includes creating bundles, retrieving bundle details, and listing available bundles for resellers.",
+      "item": [
+        {
+          "name": "Create Bundle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{supplier_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Bundle Title\",\n  \"number_of_items\": 10,\n  \"grade\": \"A\",\n  \"price\": 500.0,\n  \"type\": \"sorted\",\n  \"declared_rating\": 85\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/bundles",
+              "host": ["{{base_url}}"],
+              "path": ["bundles"]
+            },
+            "description": "This endpoint allows a supplier to create a new bundle by providing details such as title, number of items, grade, price, type, and declared rating."
+          }
+        },
+        {
+          "name": "List Bundles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{supplier_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bundles",
+              "host": ["{{base_url}}"],
+              "path": ["bundles"]
+            },
+            "description": "This endpoint retrieves a list of all bundles created by the supplier."
+          }
+        },
+        {
+          "name": "Get Bundle By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{supplier_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bundles/:id",
+              "host": ["{{base_url}}"],
+              "path": ["bundles", ":id"]
+            },
+            "description": "This endpoint retrieves the details of a specific bundle by its unique ID."
+          }
+        },
+        {
+          "name": "List Available Bundles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reseller_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bundles/available",
+              "host": ["{{base_url}}"],
+              "path": ["bundles", "available"]
+            },
+            "description": "This endpoint retrieves a list of all bundles available for resellers."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "description": "This folder contains endpoints for cart operations. It includes adding items to the cart, retrieving cart items, removing items from the cart, and checking out items.",
+      "item": [
+        {
+          "name": "Add Item to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{consumer_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"listing_id\": \"product_id\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/cart/items",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart", "items"]
+            },
+            "description": "This endpoint allows a consumer to add an item to their cart by providing the listing ID."
+          }
+        },
+        {
+          "name": "Get Cart Items",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{consumer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/cart",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart"]
+            },
+            "description": "This endpoint retrieves all items currently in the consumer's cart."
+          }
+        },
+        {
+          "name": "Remove Item from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{consumer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/cart/items/:listingID",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart", "items", ":listingID"]
+            },
+            "description": "This endpoint allows a consumer to remove an item from their cart by providing the listing ID."
+          }
+        },
+        {
+          "name": "Checkout Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{consumer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/checkout",
+              "host": ["{{base_url}}"],
+              "path": ["api", "checkout"]
+            },
+            "description": "This endpoint allows a consumer to checkout all items in their cart."
+          }
+        },
+        {
+          "name": "Checkout Single Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{consumer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/checkout/:listingId",
+              "host": ["{{base_url}}"],
+              "path": ["api", "checkout", ":listingId"]
+            },
+            "description": "This endpoint allows a consumer to checkout a single item by providing the listing ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "description": "This folder contains endpoints for submitting reviews for products. Consumers can provide ratings and comments for purchased products.",
+      "item": [
+        {
+          "name": "Submit Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{consumer_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order_id\": \"order_id\",\n  \"product_id\": \"product_id\",\n  \"rating\": 5,\n  \"comment\": \"Great product!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products/reviews",
+              "host": ["{{base_url}}"],
+              "path": ["products", "reviews"]
+            },
+            "description": "This endpoint allows a consumer to submit a review for a product they have purchased by providing the order ID, product ID, rating, and comment."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "description": "This folder contains endpoints for managing orders. It includes creating orders, retrieving order history, and getting details of specific orders.",
+      "item": [
+        {
+          "name": "Get Order History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders/history",
+              "host": ["{{base_url}}"],
+              "path": ["orders", "history"]
+            },
+            "description": "This endpoint retrieves the order history of the authenticated user."
+          }
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders",
+              "host": ["{{base_url}}"],
+              "path": ["orders"]
+            },
+            "description": "This endpoint allows a user to create a new order."
+          }
+        },
+        {
+          "name": "Get Order By ID",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders/:id",
+              "host": ["{{base_url}}"],
+              "path": ["orders", ":id"]
+            },
+            "description": "This endpoint retrieves the details of a specific order by its unique ID."
+          }
+        },
+        {
+          "name": "Purchase Bundle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reseller_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bundle_id\": \"bundle123\",\n  \"quantity\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/orders",
+              "host": ["{{base_url}}"],
+              "path": ["orders"]
+            },
+            "description": "This endpoint allows a reseller to purchase a bundle by providing the bundle ID and quantity."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "description": "This folder contains admin-specific endpoints. It includes managing users, retrieving trust scores, viewing blacklisted users, and accessing the admin dashboard.",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/users",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "users"]
+            },
+            "description": "This endpoint retrieves a list of all users in the system. Requires admin privileges."
+          }
+        },
+        {
+          "name": "Delete User If Blacklisted",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/users/:userId",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "users", ":userId"]
+            },
+            "description": "This endpoint deletes a user if they are blacklisted. Requires admin privileges."
+          }
+        },
+        {
+          "name": "Get Trust Scores",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/users/trust-scores",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "users", "trust-scores"]
+            },
+            "description": "This endpoint retrieves the trust scores of all users. Requires admin privileges."
+          }
+        },
+        {
+          "name": "Get Blacklisted Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/blacklisted-users",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "blacklisted-users"]
+            },
+            "description": "This endpoint retrieves a list of all blacklisted users. Requires admin privileges."
+          }
+        },
+        {
+          "name": "Get Admin Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "dashboard"]
+            },
+            "description": "This endpoint retrieves the admin dashboard data. Requires admin privileges."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Warehouse",
+      "description": "This folder contains endpoints for warehouse management. It includes retrieving a list of items currently stored in the warehouse.",
+      "item": [
+        {
+          "name": "Get Warehouse Items",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/warehouse",
+              "host": ["{{base_url}}"],
+              "path": ["warehouse"]
+            },
+            "description": "This endpoint retrieves a list of all items currently stored in the warehouse."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Supplier",
+      "description": "This folder contains endpoints for supplier-specific operations. It includes accessing the supplier dashboard to view insights and metrics.",
+      "item": [
+        {
+          "name": "Get Supplier Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/supplier/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["supplier", "dashboard"]
+            },
+            "description": "This endpoint retrieves the supplier dashboard data, providing insights and metrics relevant to the supplier."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reseller",
+      "description": "This folder contains endpoints for reseller-specific operations. It includes accessing reseller metrics and insights, such as sales performance and inventory status.",
+      "item": [
+        {
+          "name": "Get Reseller Metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reseller/metrics",
+              "host": ["{{base_url}}"],
+              "path": ["reseller", "metrics"]
+            },
+            "description": "This endpoint retrieves metrics and insights specific to the reseller, such as sales performance and inventory status."
+          }
+        }
+      ]
+    }
+  ]
+}
